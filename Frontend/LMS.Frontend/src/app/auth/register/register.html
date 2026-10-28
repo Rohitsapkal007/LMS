@@ -1,0 +1,79 @@
+<div class="d-flex justify-content-center align-items-center vh-100">
+  <div class="card shadow-sm" style="width: 500px;">
+    <div class="card-body">
+      <h3 class="text-center mb-4">Register</h3>
+
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+        <!-- Full Name -->
+        <div class="mb-3">
+          <label for="userName" class="form-label">User Name</label>
+          <input id="userName" type="text" class="form-control" formControlName="userName">
+          @if (registerForm.get('userName')?.invalid && registerForm.get('userName')?.touched) {
+          <div class="text-danger">
+            user name is required (min 3 chars).
+          </div>
+          }
+        </div>
+
+        <!-- Email -->
+        <div class="mb-3">
+          <label for="email" class="form-label">Email address</label>
+          <input id="email" type="email" class="form-control" formControlName="email">
+          @if(registerForm.get('email')?.invalid && registerForm.get('email')?.touched){
+          <div class="text-danger">
+            Enter a valid email.
+          </div>
+          }
+
+        </div>
+
+        <!-- Password -->
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input id="password" type="password" class="form-control" formControlName="password">
+          @if(registerForm.get('password')?.invalid && registerForm.get('password')?.touched){
+          <div class="text-danger">
+            Password must be at least 6 characters.
+          </div>
+          }
+
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="mb-3">
+          <label for="confirmPassword" class="form-label">Confirm Password</label>
+          <input id="confirmPassword" type="password" class="form-control" formControlName="confirmPassword">
+          @if (registerForm.errors?.['mismatch'] && registerForm.get('confirmPassword')?.touched) {
+          <div class="text-danger">
+            Passwords do not match.
+          </div>
+          }
+
+        </div>
+
+        <!-- Role -->
+        <div class="mb-3">
+          <label for="role" class="form-label">Role</label>
+          <select id="role" class="form-select" formControlName="role">
+            <option value="Student">Student</option>
+            <option value="Instructor">Instructor</option>
+          </select>
+          @if(registerForm.get('role')?.errors?.['invalidRole'])
+          {
+          <div class="text-danger">
+            Please select a valid role (Student, Instructor, Admin).
+          </div>
+          }
+
+        </div>
+
+        <!-- Buttons -->
+        <div class="d-flex justify-content-between mt-4">
+          <button class="btn btn-light" (click)="goToLogin()">Back to Login</button>
+          <button type="submit" class="btn btn-success btn-lg" [disabled]="registerForm.invalid">Register</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

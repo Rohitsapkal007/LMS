@@ -1,0 +1,48 @@
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Course Title</th>
+            <th>Description</th>
+            <th>Enrolled On</th>
+            <th>Progress</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (course of courses$|async; track course.courseId) {
+        <tr>
+            <td>{{ course.title }}</td>
+            <td>{{ course.description }}</td>
+            <td>{{ course.purchaseDate | date:'mediumDate' }}</td>
+            <td>
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" [style.width.%]="course.progress || 0"></div>
+                </div>
+            </td>
+            <td>
+                @if (course.status === 'Active') {
+                <span class="badge bg-success">Active</span>
+                }
+                @else if (course.status === 'Completed') {
+                <span class="badge bg-secondary">Completed</span>
+                }
+                @else if (course.status === 'Cancelled') {
+                <span class="badge bg-danger">Cancelled</span>
+                }
+            </td>
+            <td>
+                <button class="btn btn-primary btn-sm">View</button>
+                @if(course.status === 'Completed')
+                {
+                <button class="btn btn-success btn-sm"> Download Certificate </button>
+                }
+            </td>
+        </tr>
+        }
+        @empty {
+        <div>No Item to display</div>
+        }
+    </tbody>
+</table>

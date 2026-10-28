@@ -1,0 +1,22 @@
+<!-- course-detail-modal.component.html -->
+<h2 mat-dialog-title>{{ data.title }}</h2>
+
+<mat-dialog-content class="mat-typography">
+    <div class="course-thumbnail mb-3">
+        <img [src]="apiUrl + data.thumbnailUrl" alt="Course Thumbnail" class="img-fluid rounded"
+            style="max-height: 350px; object-fit: cover; width: 100%;">
+    </div>
+
+    <p><strong>Description:</strong> {{ data.description }}</p>
+    <p><strong>Syllabus:</strong> {{ data.syllabus }}</p>
+    <p><strong>Duration:</strong> {{ data.duration }} hours</p>
+    <p><strong>Instructor:</strong> {{ data.instructorName }}</p>
+</mat-dialog-content>
+
+<mat-dialog-actions class="d-flex justify-content-between mt-4">
+    <button class="btn btn-light" mat-button mat-dialog-close>Return to Main Menu</button>
+    @if(role == "Student"){
+    <button class="btn btn-primary" mat-raised-button (click)="buyCourse()">Buy</button>
+    }
+
+</mat-dialog-actions>

@@ -1,0 +1,127 @@
+<div class="container mt-3">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3>Manage Content</h3>
+        <button class="btn btn-success" [disabled]="!canSubmit" (click)="submitForApproval()">Submit For
+            Approval</button>
+    </div>
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <button class="nav-link" [class.active]="activeTab === 'videos'"
+                (click)="activeTab='videos'">Videos</button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" [class.active]="activeTab === 'resources'"
+                (click)="activeTab='resources'">Resources</button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" [class.active]="activeTab === 'status'"
+                (click)="activeTab='status'">Validation</button>
+        </li>
+    </ul>
+    <div class="card border-top-0">
+        <div class="card-body">
+            @if(activeTab === 'videos')
+            {
+            <h5>Video Lectures</h5>
+            <div class="row">
+                <div class="col-md-4">
+                    <input type="text" class="form-control" placeholder="Lecture Title" [(ngModel)]="videoTitle">
+                </div>
+                <div class="col-md-6">
+                    <input #videoInput type="file" class="form-control" accept="video/*"
+                        (change)="onVideoSelected($event)">
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-primary" (click)="addVideo()">Add</button>
+                </div>
+            </div>
+            <hr>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Video</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for(video of videos; track video.id)
+                    {
+                    <tr>
+                        <td>{{video.title}}</td>
+                        <td>{{video.fileName}}</td>
+                        <td>
+                            <button class="btn btn-danger btn-sm" (click)="deleteVideo(video.id)">Delete</button>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+            }
+
+            @if(activeTab === 'resources')
+            {
+            <h5>Course Resources</h5>
+            <div class="row">
+                <div class="col-md-8">
+                    <input #ResourceInput type="file" class="form-control" accept=".pdf,.doc,.docx,.ppt,.pptx,.xlsx"
+                        (change)="onResourceSelected($event)">
+                </div>
+                <div class="col-md-4">
+                    <button class="btn btn-primary" (click)="addResource()">Upload Resource</button>
+                </div>
+            </div>
+            <hr>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>File Name</th>
+                        <th>Type</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for(resource of resources; track resource.id)
+                    {
+                    <tr>
+                        <td>{{resource.fileName}}</td>
+                        <td>{{resource.fileType}}</td>
+                        <td>
+                            <button class="btn btn-danger btn-sm" (click)="deleteResourse(resource.id)">Delete</button>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+            }
+
+            @if(activeTab === 'status')
+            {
+            <h5>Content Checklist</h5>
+            <ul class="list-group">
+                <li class="list-group-item">
+                    Course Details
+                    <span class="badge bg-success float-end">Completed</span>
+                </li>
+                <li class="list-group-item">
+                    Thumbnail
+                    <span class="badge bg-success float-end">Completed</span>
+                </li>
+                <li class="list-group-item">
+                    Videos
+                    <span class="badge float-end" [ngClass]="videoCount > 0 ? 'bg-success' : 'bg-danger'">
+                        {{videoCount}}
+                    </span>
+                </li>
+                <li class="list-group-item">
+                    Resources
+                    <span class="badge float-end" [ngClass]="resourceCount > 0 ? 'bg-success' : 'bg-danger'">
+                        {{resourceCount}}
+                    </span>
+                </li>
+            </ul>
+            }
+        </div>
+    </div>
+</div>

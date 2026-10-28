@@ -1,0 +1,170 @@
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8 col-md-10">
+      <div class="card shadow-lg border-0">
+        <div class="card-header bg-primary text-white text-center">
+          <h3 class="mb-0">Edit Course</h3>
+        </div>
+        <div class="card-body p-4">
+          <form [formGroup]="courseForm" (ngSubmit)="onSubmit()">
+
+            <!-- Title -->
+            <div class="mb-3">
+              <label for="title" class="form-label fw-bold">Course Title</label>
+              <input id="title" type="text" class="form-control" formControlName="title"
+                placeholder="Enter course title">
+              @if (courseForm.get('title')?.invalid && courseForm.get('title')?.touched) {
+              <div class="text-danger small">Title is required (min 3 chars).</div>
+              }
+            </div>
+
+            <!-- Description -->
+            <div class="mb-3">
+              <label for="description" class="form-label fw-bold">Description</label>
+              <textarea id="description" rows="3" class="form-control" formControlName="description"
+                placeholder="Brief course description"></textarea>
+              @if (courseForm.get('description')?.invalid && courseForm.get('description')?.touched) {
+              <div class="text-danger small">Description is required.</div>
+              }
+            </div>
+
+            <!-- Syllabus -->
+            <div class="mb-3">
+              <label for="syllabus" class="form-label fw-bold">Syllabus</label>
+              <textarea id="syllabus" rows="3" class="form-control" formControlName="syllabus"
+                placeholder="Outline of topics"></textarea>
+              @if (courseForm.get('syllabus')?.invalid && courseForm.get('syllabus')?.touched) {
+              <div class="text-danger small">Syllabus is required.</div>
+              }
+            </div>
+
+            <!-- enrollmentLimit -->
+            <div class="mb-3">
+              <label for="enrollmentLimit" class="form-label fw-bold">Enrollment Limit</label>
+              <input id="enrollmentLimit" type="number" class="form-control" formControlName="enrollmentLimit"
+                [innerText]="0">
+              @if (courseForm.get('enrollmentLimit')?.hasError('required') && courseForm.get('enrollmentLimit')?.touched) {
+              <div class="text-danger small">Enrollment Limit is required.</div>
+              }
+              @if (courseForm.get('enrollmentLimit')?.hasError('min')) {
+              <div class="text-danger small">Enrollment Limit must be 0 or greater than 0.</div>
+              }
+              @if(courseForm.get('enrollmentLimit')?.hasError('pattern'))
+              {
+                <div class="text-danger small">Enrollment Limit must Integer.</div>
+              }
+            </div>
+
+            <!-- visibility -->
+            <div class="mb-3">
+              <label for="category" class="form-label fw-bold">Visibility</label>
+              <select id="category" class="form-select" formControlName="visibility">
+                @for (option of coursesVisibilityOptions; track option.value) {
+                <option [value]="option.value">{{ option.label }}</option>
+                }
+              </select>
+            </div>
+
+            <!-- Category -->
+            <div class="mb-3">
+              <label for="category" class="form-label fw-bold">Category</label>
+              <select id="category" class="form-select" formControlName="category">
+                <option value="">Select Category</option>
+                @for (option of coursesCategoryOptions; track option.value) {
+                <option [value]="option.value">{{ option.label }}</option>
+                }
+              </select>
+            </div>
+
+
+            <!-- Level -->
+            <div class="mb-3">
+              <label for="level" class="form-label fw-bold">Level</label>
+              <select id="level" class="form-select" formControlName="level">
+                <option value="">Select Level</option>
+                <option value="Beginner">Beginner</option>
+                <option value="Intermediate">Intermediate</option>
+                <option value="Advanced">Advanced</option>
+              </select>
+            </div>
+
+            <!-- Duration -->
+            <div class="mb-3">
+              <label for="duration" class="form-label fw-bold">Duration (Hours)</label>
+              <input id="duration" type="number" class="form-control" formControlName="duration"
+                placeholder="e.g. 40">
+              @if (courseForm.get('duration')?.hasError('required') && courseForm.get('duration')?.touched) {
+              <div class="text-danger small">Duration is required.</div>
+              }
+              @if (courseForm.get('duration')?.hasError('min')) {
+              <div class="text-danger small">Duration must be greater than 0.</div>
+              }
+              @if(courseForm.get('duration')?.hasError('pattern'))
+              {
+                <div class="text-danger small">Duration must Integer.</div>
+              }
+            </div>
+
+            <!-- Language -->
+            <div class="mb-3">
+              <label for="language" class="form-label fw-bold">Language</label>
+              <select id="language" class="form-select" formControlName="language">
+                <option value="">Select Language</option>
+                @for (option of coursesLanguageOptions; track option.value) {
+                <option [value]="option.value">{{ option.label }}</option>
+                }
+              </select>
+            </div>
+
+            <!-- thumbnail -->
+            <div class="mb-3">
+              <label for="thumbnail" class="form-label fw-bold">Thumbnail</label>
+              <input id="thumbnail" type="file" accept="image/*" class="form-control" (change)="onThumbnailSelected($event)"/>
+              @if (thumbnailPreview) {
+                <img [src]="thumbnailPreview" alt="Preview" width="150" />
+              }
+              @else {
+                <img alt="Preview" width="150" />
+              }
+            </div>
+
+            <!-- prerequisites -->
+            <div class="mb-3">
+              <label for="syllabus" class="form-label fw-bold">Prerequisites</label>
+              <textarea id="syllabus" rows="3" class="form-control" formControlName="prerequisites"
+                placeholder="prerequisites before this course...."></textarea>
+            </div>
+
+            <!-- learningObjectives -->
+            <div class="mb-3">
+              <label for="syllabus" class="form-label fw-bold">Learning Objectives</label>
+              <textarea id="syllabus" rows="3" class="form-control" formControlName="learningObjectives"
+                placeholder="Learning Objectives from this course...."></textarea>
+            </div>
+
+            <!-- Target Audience -->
+            <div class="mb-3">
+              <label for="targetAudience" class="form-label fw-bold">Target Audience</label>
+              <select id="targetAudience" class="form-select" formControlName="targetAudience">
+                <option value="">Select Audience</option>
+                @for (option of coursesTargetAudienceOptions; track option.value) {
+                <option [value]="option.value">{{ option.label }}</option>
+                }
+              </select>
+            </div>
+
+            <!-- Buttons -->
+            <div class="d-flex justify-content-between mt-4">
+              <button type="button" class="btn btn-outline-secondary" (click)="goBack()">Cancel</button>
+              <div class="d-flex gap-2">
+                <button type ="submit" class="btn btn-primary" [disabled]="courseForm.invalid">
+                  Save Edit
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

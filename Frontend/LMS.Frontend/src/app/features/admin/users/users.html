@@ -1,0 +1,80 @@
+<div class="container mt-4">
+  <h2 class="mb-3">Manage Users</h2>
+  <div class="card mb-3 p-3 shadow-sm">
+    <form [formGroup]="filterForm" (ngSubmit)="applyFilter()" class="row g-3 align-items-center">
+      <div class="col-md-4">
+        <label for="nameFilter" class="form-label">userName</label>
+        <input type="text" id="nameFilter" formControlName="userName" type="text" class="form-control" placeholder="Enter name...">
+      </div>
+
+      <div class="col-md-4">
+        <label for="emailFilter" class="form-label">Email</label>
+        <input id="emailFilter" formControlName="email" type="text" class="form-control" placeholder="Enter email...">
+      </div>
+      
+      <div class="col-md-4">
+        <label for="roleFilter" class="form-label">Role</label>
+        <select id="roleFilter" class="form-select" formControlName="role">
+          <option value="">All</option>
+          <option value="Student">Student</option>
+          <option value="Instructor">Instructor</option>
+        </select>
+      </div>
+
+
+      <div class="col-md-4">
+        <label for="statusFilter" class="form-label">Status</label>
+        <select id="statusFilter" class="form-select" formControlName="isActive">
+           <option value="">All</option>
+           <option value="true">Active</option>
+           <option value="false">Inactive</option>
+        </select>
+      </div>
+
+      <div class="col-12 text-end">
+      <button type="submit" class="btn btn-primary me-2" (click)="applyFilter()">Apply</button>
+      <button type="button" class="btn btn-secondary" (click)="resetFilter()" >Reset</button>
+    </div>
+      
+
+    </form>
+
+  </div>
+
+  <table class="table table-striped table-hover table-bordered align-middle">
+    <thead class="table-dark">
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Role</th>
+        <th scope="col">Status</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users$ | async">
+        <td>{{ user.userName }}</td>
+        <td>{{ user.email }}</td>
+        <td>
+          <select class="form-select form-select-sm"
+                  [value]="user.role"
+                  (change)="changeRole(user.id, $any($event.target).value)">
+            <option value="Student">Student</option>
+            <option value="Instructor">Instructor</option>
+          </select>
+        </td>
+        <td class="text-center">
+          <input class="form-check-input" type="checkbox"
+                 [checked]="user.isActive"
+                 (change)="toggleStatus(user.id, $event.target.checked)">
+        </td>
+        <td>
+          <button class="btn btn-sm btn-danger" (click)="deleteRole(user.id)">
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+<button type="submit" class="btn btn-primary btn-lg" [disabled]="(this.pendingChanges.length === 0)" (click)="saveChange()">Submit</button>
+</div>

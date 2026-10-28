@@ -1,0 +1,34 @@
+<div class="table-responsive">
+    <table class="table table-hover table-striped align-middle">
+        <thead class="table-light">
+            <tr>
+                <th>UserName</th>
+                <th>Email</th>
+                <th>EnrollmentDate</th>
+                <th>Progress</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (enrolledStudent of enrolledStudentData$ | async; track enrolledStudent.enrollmentId) {
+            <tr>
+                <td>{{ enrolledStudent.userName }}</td>
+                <td>{{ enrolledStudent.email }}</td>
+                <td>{{ enrolledStudent.purchaseDate }}</td>
+                <td>{{ enrolledStudent.progress }}</td>
+                <td>{{ enrolledStudent.status }}</td>
+            </tr>
+            }
+            @empty {
+            <tr>
+                <td colspan="9" class="text-center">No item to display</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+    <div class="d-flex flex-wrap justify-content-left gap-2 px-2">
+        <button class="btn btn-secondary" (click)="backToMyEnrollment()">Back</button>
+    </div>
+    
+</div>
+

@@ -1,0 +1,28 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* full viewport height */
+}
+
+/* Header stays at top */
+app-header {
+  flex-shrink: 0;
+}
+
+/* Main grows to fill space */
+.app-main {
+  flex: 1;
+  display: block;
+  padding-bottom: 2rem; /* safety space above footer */
+}
+
+/* Footer styling */
+app-footer {
+  color: #fff;
+  font-size: 0.9rem;
+}

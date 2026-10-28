@@ -1,0 +1,155 @@
+<div class="card shadow-sm p-3">
+  <h5 class="mb-4">Course Approval</h5>
+
+
+  <h6 class="mb-3">Pending Courses</h6>
+  <table class="table table-hover align-middle">
+    <thead class="table-light">
+      <tr>
+        <th>Course Title</th>
+        <th>Instructor</th>
+        <th>Created At</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (course of pendingCourses$ | async; track course.courseId) {
+      <tr>
+        <td>{{ course.title }}</td>
+        <td>{{ course.instructorUserName }}
+          <small class="text-muted">{{course.instructorEmail}}</small>
+        </td>
+        <td>{{ course.createdAt | date: 'mediumDate'}}</td>
+        <td>
+          <span class="badge bg-warning text-dark">{{ course.status }}</span>
+        </td>
+        <td>
+          <button class="btn btn-success btn-sm me-2" (click)="approveCourse(course.courseId)">
+            <i class="bi bi-check-circle"></i> Approve
+          </button>
+          <button class="btn btn-danger btn-sm" (click)="rejectCourse(course.courseId)">
+            <i class="bi bi-x-circle"></i> Reject
+          </button>
+        </td>
+      </tr>
+      }
+      @empty {
+      <div>No item to display</div>
+      }
+
+    </tbody>
+  </table>
+
+  <h6 class="mb-3">Approved Courses</h6>
+  <table class="table table-hover align-middle">
+    <thead class="table-light">
+      <tr>
+        <th>Course Title</th>
+        <th>Instructor</th>
+        <th>Created At</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (course of approvedCourses$ | async; track course.courseId) {
+      <tr>
+        <td>{{ course.title }}</td>
+        <td>{{ course.instructorUserName }}
+          <small class="text-muted">{{course.instructorEmail}}</small>
+        </td>
+        <td>{{ course.createdAt | date: 'mediumDate'}}</td>
+        <td>
+          <span class="badge bg-success text-dark">{{ course.status }}</span>
+        </td>
+        <td>
+          <button class="btn btn-dark btn-sm me-2" (click)="deactivateCourse(course.courseId)">
+            <i class="bi bi-check-circle"></i> Deactivate
+          </button>
+          @if ((role$ |async) === 'SuperAdmin') {<button class="btn btn-danger btn-sm"
+            (click)="rejectCourse(course.courseId)">
+            <i class="bi bi-x-circle"></i> Reject
+          </button>}
+        </td>
+      </tr>
+      }
+      @empty {
+      <div>No item to display</div>
+      }
+    </tbody>
+  </table>
+
+  <h6 class="mb-3">Rejected Courses</h6>
+  <table class="table table-hover align-middle">
+    <thead class="table-light">
+      <tr>
+        <th>Course Title</th>
+        <th>Instructor</th>
+        <th>Created At</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (course of rejectedCourses$ | async; track course.courseId) {
+      <tr>
+        <td>{{ course.title }}</td>
+        <td>{{ course.instructorUserName }}
+          <small class="text-muted">{{course.instructorEmail}}</small>
+        </td>
+        <td>{{ course.createdAt | date: 'mediumDate'}}</td>
+        <td>
+          <span class="badge bg-danger text-dark">{{ course.status }}</span>
+        </td>
+        @if ((role$ | async) === 'SuperAdmin') {<td>
+          <button class="btn btn-success btn-sm me-2" (click)="approveCourse(course.courseId)">
+            <i class="bi bi-check-circle"></i> Approve
+          </button>
+        </td>}
+      </tr>
+      }
+      @empty {
+      <div>No item to display</div>
+      }
+
+    </tbody>
+  </table>
+  @if ((role$ | async) === 'SuperAdmin') {
+  <h6 class="mb-3">Deactivated Courses</h6>
+  <table class="table table-hover align-middle">
+    <thead class="table-light">
+      <tr>
+        <th>Course Title</th>
+        <th>Instructor</th>
+        <th>Created At</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (course of deactivatedCourses$ | async; track course.courseId) {
+      <tr>
+        <td>{{ course.title }}</td>
+        <td>{{ course.instructorUserName }}
+          <small class="text-muted">{{course.instructorEmail}}</small>
+        </td>
+        <td>{{ course.createdAt | date: 'mediumDate'}}</td>
+        <td>
+          <span class="badge bg-dark text-light">{{ course.status }}</span>
+        </td>
+        <td>
+          <button class="btn btn-success btn-sm me-2" (click)="approveCourse(course.courseId)">
+            <i class="bi bi-check-circle"></i> Reactivate
+          </button>
+        </td>
+      </tr>
+      }
+      @empty {
+      <div>No item to display</div>
+      }
+    </tbody>
+  </table>
+  }
+
+</div>

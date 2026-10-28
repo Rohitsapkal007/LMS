@@ -1,0 +1,26 @@
+<div class="my-courses">
+  <button class="btn btn-primary mb-3" routerLink="add-course">+ Add New Course</button>
+
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a routerLink="drafts" routerLinkActive="active" class="nav-link">Drafts</a>
+    </li>
+    <li class="nav-item">
+      <a routerLink="pending" routerLinkActive="active" class="nav-link">Pending</a>
+    </li>
+    <li class="nav-item">
+      <a routerLink="approved" routerLinkActive="active" class="nav-link">Approved</a>
+    </li>
+    <li class="nav-item">
+      <a routerLink="rejected" routerLinkActive="active" class="nav-link">Rejected</a>
+    </li>
+    <li class="nav-item">
+      <a routerLink="deactive" routerLinkActive="active" class="nav-link">Deactivated</a>
+    </li>
+  </ul>
+
+  <div class="tab-content mt-3">
+    <!-- Child components render here -->
+    <router-outlet></router-outlet>
+  </div>
+</div>

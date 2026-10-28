@@ -1,0 +1,33 @@
+<main class="d-flex justify-content-center align-items-center" style="min-height: calc(100vh - 120px);">
+  <div class="card shadow-sm " style=" width:500px">
+    <div class="card-body">
+      <h3 class="text-center mb-4">Login</h3>
+
+      <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+      <!-- Email -->
+      <div class="mb-3">
+        <label for="userName" class="form-label">UserName</label>
+        <input type="userName" class="form-control" id="userName" formControlName="userName" placeholder="Enter UserName">
+        <div *ngIf="loginForm.get('userName')?.invalid && loginForm.get('userName')?.touched" class="text-danger">
+          User Name is required.
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" class="form-control" id="password" formControlName="password" placeholder="Enter password">
+        <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="text-danger">
+          Password is required.
+        </div>
+      </div>
+
+      <!-- Submit button -->
+      <div class="d-flex justify-content-between align-items-center mt-4">
+        <a routerLink="/register" class="btn btn-light">Register</a>
+        <button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid">Login</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</main>
